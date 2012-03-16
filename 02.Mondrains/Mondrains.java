@@ -1,25 +1,15 @@
 import java.awt.*;
-import javax.swing.*;
+import java.applet.*;
 import java.util.Random;
 
-public class Mondrains extends Canvas
+public class Mondrains extends Applet
 {
   static Random rand;
 
   //default constructor to set up the housekeeping
-  public Mondrains()
+  public void init()
   {
     rand = new Random();
-  }
-
-  public static void main(String [] args)
-  {
-    Mondrains canvas = new Mondrains();
-    JFrame frame = new JFrame("Nikhil's Art");
-    frame.setSize(600, 600);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.getContentPane().add(canvas);
-    frame.setVisible(true);
   }
 
   public void paint(Graphics g)
@@ -33,18 +23,28 @@ public class Mondrains extends Canvas
     if( h < 10 || w < 10) return;
 
     //Paint the background with a random color
-    g.setColor( RandomColor() );
-    g.fillRect(x,y,w,h);
-    //Make a choice between 0 1 and 2
-    int choice = rand.nextInt(3);
+		//g.fillRect(
+	//g.drawRect(x,y,w,h);
+	g.setColor(Color.black);
+    g.fillRect(x,y, w, h);
+
+   g.setColor( RandomColor() );
+	
+    g.fillRect(x,y,w-1,h-1);
+	
+    //Make a choice between 0(inclusive) 5 exclusive
+	
+    int choice = rand.nextInt(5);
     switch( choice )
     {
       case 0:
-        //do nothing
+		//do nothing
         System.out.println("\tDoing Nothing");
         break;
+		
       case 1:
-        //divide vertically
+	  case 2:
+	          //divide vertically
         System.out.println("\tVertical Split");
         int midX = rand.nextInt(w);
         //Left Part
@@ -52,8 +52,9 @@ public class Mondrains extends Canvas
         //Right part
         DrawMondrain(g,x + midX,y,w - midX,h);
         break;
-      case 2:
-        //divide horizontally
+      case 3:
+	  case 4:
+	   //divide horizontally
         System.out.println("\tHorizontal Split");
         int midY = rand.nextInt(h);
         //top portion
@@ -61,6 +62,8 @@ public class Mondrains extends Canvas
         //bottom Portion
         DrawMondrain(g, x, y + midY, w, h - midY);
         break;
+        
+		
     }
   }
 
