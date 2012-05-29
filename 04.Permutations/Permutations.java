@@ -1,10 +1,12 @@
+import java.util.*;
+
 public class Permutations
 {
-  private static void RecursivelyPermute(String soFar, String rest)
+  private static void RecursivelyPermute(String soFar, String rest,List<String> permutations)
   {
     if(rest.equals(""))
     {
-      System.out.println(soFar);
+      permutations.add(soFar);
     }
     else
     {
@@ -12,15 +14,17 @@ public class Permutations
       {
         String next = soFar + rest.charAt(i);
         String remaining = rest.substring(0,i) + rest.substring(i+1);
-        RecursivelyPermute(next,remaining);
+        RecursivelyPermute(next,remaining,permutations);
       }
     }
   }
 
-  //wrapper function to call RecursivelyPermute
-  public static void Permute(String str)
+  //wrapper function to return a list containing all the permutations from RecursivelyPermute
+  public static List<String> Permute(String str)
   {
-    RecursivelyPermute("",str);
+    List<String> permutations = new ArrayList<String>();
+    RecursivelyPermute("",str,permutations);
+    return permutations;
   }
 
   public static void main(String [] args)
@@ -31,7 +35,11 @@ public class Permutations
     }
     else
     {
-      Permute(args[0]);
+      Iterator it = Permute(args[0]).iterator();
+      while(it.hasNext())
+      {
+        System.out.println(it.next());
+      }
     }
   }
 }
